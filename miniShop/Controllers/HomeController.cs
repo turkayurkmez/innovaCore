@@ -22,9 +22,9 @@ namespace miniShop.Controllers
         }
 
        
-        public IActionResult Index()
+        public IActionResult Index(int? categoryId=0)
         {
-            var products = productService.GetProducts();
+            var products = categoryId == 0 ? productService.GetProducts() : productService.GetProductsByCategoryId(categoryId.Value);
             return View(products);
         }
 

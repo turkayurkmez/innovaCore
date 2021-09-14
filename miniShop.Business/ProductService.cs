@@ -8,17 +8,22 @@ using System.Threading.Tasks;
 
 namespace miniShop.Business
 {
-    public class FakeProductService : IProductService
+    public class ProductService : IProductService
     {
         private IProductRepostiory productRepostiory;
 
-        public FakeProductService(IProductRepostiory productRepostiory)
+        public ProductService(IProductRepostiory productRepostiory)
         {
             this.productRepostiory = productRepostiory;
         }
         public List<Product> GetProducts()
         {
             return productRepostiory.SelectAll().ToList();
+        }
+
+        public List<Product> GetProductsByCategoryId(int categoryId)
+        {
+            return productRepostiory.SelectWithCriteria(x => x.CategoryId == categoryId).ToList();
         }
     }
 }

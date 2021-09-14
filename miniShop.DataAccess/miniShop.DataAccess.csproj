@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\miniShop.EFCore\miniShop.EFCore.csproj" />
     <ProjectReference Include="..\miniShop.Models\miniShop.Models.csproj" />
   </ItemGroup>
 

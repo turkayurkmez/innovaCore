@@ -2,12 +2,15 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using miniShop.Business;
 using miniShop.DataAccess.Repositories;
+using miniShop.EFCore;
 using miniShop.Infrastructure;
+using miniShop.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,8 +31,13 @@ namespace miniShop
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddTransient<IProductService, FakeProductService>();
-            services.AddTransient<IProductRepostiory, FakeProductRepository>();
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IProductRepostiory, FakeProductRepository>();
+            services.AddScoped<IRepository<Category>, FakeCategoryRepository>();
+            services.AddScoped<ICategoryService, CategoryService>();
+
+            var connectionString = Configuration.GetConnectionString("db");
+            services.AddDbContext<InnovaShopDbContext>(opt => opt.UseSqlServer(connectionString));
 
 
         }
@@ -38,7 +46,7 @@ namespace miniShop
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
-           
+
 
 
             if (env.IsDevelopment())
@@ -58,7 +66,8 @@ namespace miniShop
             //    await  context.Response.WriteAsync("Talep middleware'a ulasti");
             //});
 
-            app.Map("/test", async (appBuilder) => {
+            app.Map("/test", async (appBuilder) =>
+            {
                 appBuilder.Run(async (context) =>
                 {
                     if (context.Request.Query.ContainsKey("flag"))
@@ -76,17 +85,23 @@ namespace miniShop
 
             app.UseMiddleware<ResponseDirectMiddleware>();
 
-           // app.UseWelcomePage();
+            // app.UseWelcomePage();
 
             app.UseHttpsRedirection().UseStaticFiles().UseRouting();
-          
 
-           // app.UseRouting();
+
+            // app.UseRouting();
 
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "",
+                    pattern: "Products/category{categoryId}",
+                    defaults: new { controller = "Home", action = "Index" }
+                    );
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
