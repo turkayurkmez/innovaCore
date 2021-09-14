@@ -20,7 +20,17 @@ namespace miniShop.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var products = new List<Product>
+            {
+                new Product{ Id=1, Name ="Product A", Price=100, ImageUrl="https://cdn.dsmcdn.com//ty25/product/media/images/20201124/22/31552537/111694429/1/1_org.jpg", Description="Product Desc."},
+                new Product{ Id=2, Name ="Product B", Price=100, ImageUrl="https://cdn.dsmcdn.com//ty25/product/media/images/20201124/22/31552537/111694429/1/1_org.jpg", Description="Product Desc."},
+                new Product{ Id=3, Name ="Product C", Price=100, ImageUrl="https://cdn.dsmcdn.com//ty25/product/media/images/20201124/22/31552537/111694429/1/1_org.jpg", Description="Product Desc."},
+                new Product{ Id=4, Name ="Product D", Price=100, ImageUrl="https://cdn.dsmcdn.com//ty25/product/media/images/20201124/22/31552537/111694429/1/1_org.jpg", Description="Product Desc."},
+
+
+            };
+
+            return View(products);
         }
 
         public IActionResult Privacy()

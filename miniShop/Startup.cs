@@ -73,10 +73,10 @@ namespace miniShop
 
            // app.UseWelcomePage();
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            app.UseHttpsRedirection().UseStaticFiles().UseRouting();
+          
 
-            app.UseRouting();
+           // app.UseRouting();
 
             app.UseAuthorization();
 
