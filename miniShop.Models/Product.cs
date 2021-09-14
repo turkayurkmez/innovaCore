@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace miniShop.Models
 {
-   public class Product
+   public class Product : IEntity
     {
         public int Id { get; set; }
         [Required(ErrorMessage = "Ad alanını doldurunuz")]
@@ -19,7 +19,10 @@ namespace miniShop.Models
         public int? StockCount { get; set; }
         public DateTime CreatedDate { get; set; }
         public bool? IsActive { get; set; }
-      
+
+        public double? Discount { get; set; } = 0;
+
+
         public Category Category { get; set; }
         [ForeignKey("Category")]
         public int CategoryId { get; set; }
