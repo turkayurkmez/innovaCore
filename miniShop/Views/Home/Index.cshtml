@@ -20,7 +20,7 @@
                     <h4 class="card-title">@product.Name</h4>
                     <p class="card-text">@product.Description</p>
                     <p class="card-text">@product.Price - @(product.Price * (decimal)(1-product.Discount))</p>
-                    <button class="btn btn-success">Sepete Ekle</button>
+                    <button  class="btn btn-success sepet" data-name="@product.Name" data-id="@product.Id">Sepete Ekle</button>
                 </div>
             </div>
 
@@ -28,3 +28,23 @@
         count++;
     }
 </div>
+
+@section Scripts{ 
+  <script>
+      $(document).ready(function () {
+          $('.sepet').on('click', function () {
+             // let name = $(this).data('name');
+              let id = $(this).data('id');
+              $.ajax({
+                  url: '/Cart/AddToCart/' + id,
+                  type: 'GET',
+                  success: function (data) {
+                      alertify.success(` ${data} sepete eklendi`);
+                  }
+              });
+
+              
+          });
+      });
+  </script>
+}

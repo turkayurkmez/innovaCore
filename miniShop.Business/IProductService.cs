@@ -7,5 +7,7 @@ namespace miniShop.Business
     {
         List<Product> GetProducts();
         List<Product> GetProductsByCategoryId(int categoryId);
+
+        Product GetProduct(int id);
     }
 }

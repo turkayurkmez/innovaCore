@@ -30,14 +30,21 @@ namespace miniShop
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-            services.AddScoped<IProductService, ProductService>();
-            services.AddScoped<IProductRepostiory, FakeProductRepository>();
-            services.AddScoped<IRepository<Category>, FakeCategoryRepository>();
+            services.AddControllersWithViews(opt => opt.ModelBinderProviders.Add(new CustomModelBinderProvider()));
+
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<ICategoryService, CategoryService>();
+
+            services.AddScoped<IProductService, ProductService>();
+            services.AddScoped<IProductRepostiory, ProductRepository>();
+
 
             var connectionString = Configuration.GetConnectionString("db");
             services.AddDbContext<InnovaShopDbContext>(opt => opt.UseSqlServer(connectionString));
+            services.AddSession(opt =>
+            {
+                opt.IdleTimeout = TimeSpan.FromMinutes(50);
+            });
 
 
         }
@@ -45,9 +52,6 @@ namespace miniShop
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-
-
-
 
             if (env.IsDevelopment())
             {
@@ -91,6 +95,7 @@ namespace miniShop
 
 
             // app.UseRouting();
+            app.UseSession();
 
             app.UseAuthorization();
 

@@ -19,6 +19,7 @@ namespace miniShop.EFCore
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            
             modelBuilder.Entity<Product>().HasOne(p => p.Category)
                                           .WithMany(c => c.Products)
                                           .HasForeignKey(p => p.CategoryId)
@@ -27,5 +28,8 @@ namespace miniShop.EFCore
 
             base.OnModelCreating(modelBuilder);
         }
+
+
+        
     }
 }

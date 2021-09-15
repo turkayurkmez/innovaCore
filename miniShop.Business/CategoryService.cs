@@ -10,9 +10,9 @@ namespace miniShop.Business
 {
     public class CategoryService : ICategoryService
     {
-        private IRepository<Category> repository;
+        private ICategoryRepository repository;
 
-        public CategoryService(IRepository<Category> repository )
+        public CategoryService(ICategoryRepository repository )
         {
             this.repository = repository;
         }

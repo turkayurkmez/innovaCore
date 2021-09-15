@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace miniShop.DataAccess.Repositories
 {
-    public class ProductRepository : IProductRepostiory
+    public class CategoryRepository : ICategoryRepository
     {
         private InnovaShopDbContext dbContext;
 
-        public ProductRepository(InnovaShopDbContext dbContext)
+        public CategoryRepository(InnovaShopDbContext dbContext)
         {
             this.dbContext = dbContext;
         }
-        public int Add(Product entity)
+        public int Add(Category entity)
         {
             throw new NotImplementedException();
         }
@@ -27,32 +27,27 @@ namespace miniShop.DataAccess.Repositories
             throw new NotImplementedException();
         }
 
-        public void Delete(Product entity)
+        public void Delete(Category entity)
         {
             throw new NotImplementedException();
         }
 
-        public Product GetById(int id)
+        public Category GetById(int id)
         {
-            return dbContext.Products.Find(id);
+            throw new NotImplementedException();
         }
 
-        public IQueryable<Product> GetProductsByName(string name)
+        public IQueryable<Category> SelectAll()
         {
-            return SelectWithCriteria(p => p.Name.Contains(name));
+            return dbContext.Categories;
         }
 
-        public IQueryable<Product> SelectAll()
+        public IQueryable<Category> SelectWithCriteria(Expression<Func<Category, bool>> predicate)
         {
-            return dbContext.Products;
+            throw new NotImplementedException();
         }
 
-        public IQueryable<Product> SelectWithCriteria(Expression<Func<Product, bool>> predicate)
-        {
-            return dbContext.Products.Where(predicate);
-        }
-
-        public Product Update(Product entity)
+        public Category Update(Category entity)
         {
             throw new NotImplementedException();
         }

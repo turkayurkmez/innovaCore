@@ -1,0 +1,51 @@
+﻿@model ShoppingCard
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+@if (Model.Card == null || Model.Card.Count == 0)
+{
+    <div class="alert alert-danger">Henüz ürün yok</div>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Ürün Adı
+                </th>
+                <th>
+                    Adet
+                </th>
+                <th>Ara Toplam</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Card)
+            {
+                <tr>
+                    <td>
+                        @item.Product.Name
+                    </td>
+                    <td>
+                        @item.Quantity
+                    </td>
+                    <td>@(item.Quantity * item.Product.Price) TL</td>
+                </tr>
+
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="3">@Model.TotalPrice.ToString("N2") TL</td>
+            </tr>
+        </tfoot>
+    </table>
+}

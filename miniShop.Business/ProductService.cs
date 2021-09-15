@@ -16,6 +16,12 @@ namespace miniShop.Business
         {
             this.productRepostiory = productRepostiory;
         }
+
+        public Product GetProduct(int id)
+        {
+            return productRepostiory.GetById(id);
+        }
+
         public List<Product> GetProducts()
         {
             return productRepostiory.SelectAll().ToList();
