@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -37,7 +38,7 @@ namespace miniShop
 
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<IProductRepostiory, ProductRepository>();
-
+            services.AddSingleton<FakeUserService>();
 
             var connectionString = Configuration.GetConnectionString("db");
             services.AddDbContext<InnovaShopDbContext>(opt => opt.UseSqlServer(connectionString));
@@ -46,6 +47,10 @@ namespace miniShop
                 opt.IdleTimeout = TimeSpan.FromMinutes(50);
             });
 
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                    .AddCookie(opt => {
+                        opt.LoginPath = "/User/Login";
+                    });
 
         }
 
@@ -97,6 +102,7 @@ namespace miniShop
             // app.UseRouting();
             app.UseSession();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

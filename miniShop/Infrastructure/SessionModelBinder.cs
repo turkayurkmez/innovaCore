@@ -8,11 +8,7 @@ using System.Threading.Tasks;
 
 namespace miniShop.Infrastructure
 {
-    public class User
-    {
-        public string Name { get; set; }
-
-    }
+   
     public class SessionModelBinder : IModelBinder
     {
         public Task BindModelAsync(ModelBindingContext bindingContext)
